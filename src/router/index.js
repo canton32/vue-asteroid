@@ -1,47 +1,45 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import { auth } from "../firebase";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '@/views/Home.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
     meta: {
       requiresAuth: true,
     },
   },
   {
-    path: "/login",
-    name: "Login",
+    path: '/login',
+    name: 'Login',
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
+      import(/* webpackChunkName: "login" */ '../views/Login.vue'),
   },
   {
-    path: "/signup",
-    name: "Signup",
+    path: '/signup',
+    name: 'Signup',
     component: () =>
-      import(/* webpackChunkName: "signup" */ "../views/Signup.vue"),
+      import(/* webpackChunkName: "signup" */ '../views/Signup.vue'),
   },
-];
+]
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
+  mode: 'history',
   routes,
-});
+})
 
 // navigation guard to check for logged in users
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
+  const requiresAuth = to.matched.some((x) => x.meta.requiresAuth)
 
-  if (requiresAuth && !auth.currentUser) {
-    next("/login");
+  if (requiresAuth) {
+    next('/login')
   } else {
-    next();
+    next()
   }
-});
-export default router;
+})
+export default router
