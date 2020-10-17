@@ -1,4 +1,5 @@
 # neows
+A front-end based in Vue.js that shows near earth Asteroid information
 
 ## Project setup
 ```
@@ -19,6 +20,3 @@ yarn build
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
