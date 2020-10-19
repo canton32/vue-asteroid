@@ -1,7 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-// The configuration below is not sensitive data. You can serenely add your config here
 const config = {
   apiKey: 'AIzaSyDYAjlty3rLGfewRv9XlXTBx2uSdVRHQhA',
   authDomain: 'neows-567b1.firebaseapp.com',

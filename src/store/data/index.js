@@ -4,7 +4,7 @@ import getters from './data.getters'
 import mutations from './data.mutation'
 
 const data = {
-  namespace: true,
+  namespaced: true,
   state,
   getters,
   actions,

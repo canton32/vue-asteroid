@@ -44,7 +44,7 @@
                   >
                     <b-form
                       role="form"
-                      @submit.prevent="handleSubmit(onSubmit)"
+                      @submit.prevent="handleSubmit(login)"
                     >
                       <base-input
                         alternative
@@ -53,7 +53,7 @@
                         :rules="{ required: true, email: true }"
                         prepend-icon="ni ni-email-83"
                         placeholder="Email"
-                        v-model="model.email"
+                        v-model="form.email"
                       >
                       </base-input>
 
@@ -65,7 +65,7 @@
                         prepend-icon="ni ni-lock-circle-open"
                         type="password"
                         placeholder="Password"
-                        v-model="model.password"
+                        v-model="form.password"
                       >
                       </base-input>
 
@@ -101,18 +101,17 @@ export default {
 
   data() {
     return {
-      model: {
+      form: {
         email: '',
         password: '',
-        rememberMe: false,
       },
 
       pageTransitionDuration: 200,
     }
   },
   methods: {
-    onSubmit() {
-      // this will be called only after form is valid. You can do api call here to login
+    login() {
+      this.$store.dispatch('auth/login', this.form)
     },
   },
 }

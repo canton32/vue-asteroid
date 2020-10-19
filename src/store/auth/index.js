@@ -4,7 +4,7 @@ import getters from './auth.getters'
 import mutations from './auth.mutation'
 
 const auth = {
-  namespace: true,
+  namespaced: true,
   state,
   getters,
   actions,

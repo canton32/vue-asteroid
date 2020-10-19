@@ -43,10 +43,7 @@
                     v-slot="{ handleSubmit }"
                     ref="formValidator"
                   >
-                    <b-form
-                      role="form"
-                      @submit.prevent="handleSubmit(onSubmit)"
-                    >
+                    <b-form role="form" @submit.prevent="handleSubmit(signup)">
                       <base-input
                         alternative
                         class="mb-3"
@@ -54,7 +51,7 @@
                         placeholder="Name"
                         name="Name"
                         :rules="{ required: true }"
-                        v-model="model.name"
+                        v-model="form.name"
                       >
                       </base-input>
 
@@ -65,7 +62,7 @@
                         placeholder="Email"
                         name="Email"
                         :rules="{ required: true, email: true }"
-                        v-model="model.email"
+                        v-model="form.email"
                       >
                       </base-input>
 
@@ -77,7 +74,7 @@
                         type="password"
                         name="Password"
                         :rules="{ required: true, min: 6 }"
-                        v-model="model.password"
+                        v-model="form.password"
                       >
                       </base-input>
                       <div class="text-muted font-italic">
@@ -107,7 +104,7 @@
 
 <script>
 import { ZoomCenterTransition } from 'vue2-transitions'
-import { BaseInput  } from '../components'
+import { BaseInput } from '../components'
 
 export default {
   components: {
@@ -116,11 +113,9 @@ export default {
   },
   data() {
     return {
-      model: {
+      form: {
         email: '',
         password: '',
-        rememberMe: false,
-        agree: false,
       },
 
       pageTransitionDuration: 200,
@@ -128,7 +123,7 @@ export default {
   },
   methods: {
     signup() {
-      this.$store.dispatch('signup', this.signupForm)
+      this.$store.dispatch('auth/signup', this.form)
     },
   },
 }

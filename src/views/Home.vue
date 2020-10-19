@@ -20,8 +20,8 @@ export default {
   name: "Home",
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("auth/logout");
     },
-  },
+  }
 };
 </script>
