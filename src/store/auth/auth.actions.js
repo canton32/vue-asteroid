@@ -19,13 +19,12 @@ const actions = {
       }
       userDb.create(newUser, user.uid)
 
+      localStorage.setItem('uid', user.uid)
+      
       commit('SET_LOADING', false)
-      return true
     } catch (err) {
-      console.log(err)
       commit('SET_ERROR', err)
       commit('SET_LOADING', false)
-      throw err
     }
   },
 
@@ -35,28 +34,28 @@ const actions = {
 
     try {
       // signup with email and password
-      await firebase
+      const { user } = await firebase
         .auth()
         .signInWithEmailAndPassword(form.email, form.password)
 
+      localStorage.setItem('uid', user.uid)
+
       commit('SET_LOADING', false)
     } catch (err) {
-      console.log(err)
       commit('SET_ERROR', err)
       commit('SET_LOADING', false)
-      throw err
     }
   },
 
-  fetchProfile: async ({ commit }, firebaseAuthUser) => {
-    commit('SET_LOADING', false)
+  /*fetchProfile: async ({ commit }, firebaseAuthUser) => {
+    commit('SET_LOADING', true)
     const userFromFirebase = await new UsersDB().read(firebaseAuthUser.uid)
 
     localStorage.setItem('uid', firebaseAuthUser.uid)
 
     commit('SET_USER', userFromFirebase)
-    commit('SET_LOADING', true)
-  },
+    commit('SET_LOADING', false)
+  },*/
 
   logout: async ({ commit }) => {
     await firebase.auth().signOut()

@@ -4,6 +4,19 @@
   </div>
 </template>
 
-<style lang="scss">
+<script>
+import Vue from 'vue'
 
-</style>
+import Component from 'vue-class-component'
+
+@Component
+class App extends Vue {
+  created() {
+    
+  }
+}
+
+export default App
+</script>
+
+<style lang="scss"></style>

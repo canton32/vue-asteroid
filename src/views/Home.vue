@@ -6,7 +6,9 @@
           <h3>NeoWs</h3>
         </router-link>
         <div>
-          <router-link to="/">Home</router-link>
+          <router-link to="/">
+            Home
+          </router-link>
 
           <a @click="logout()">logout</a>
         </div>

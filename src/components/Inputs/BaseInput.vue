@@ -1,52 +1,76 @@
 <template>
-  <validation-provider :rules="rules" :name="name" v-bind="$attrs" v-slot="{errors, valid, invalid, validated}">
+  <validation-provider
+    v-slot="{errors, valid, invalid, validated}"
+    :rules="rules"
+    :name="name"
+    v-bind="$attrs"
+  >
     <b-form-group>
       <slot name="label">
-        <label v-if="label" :class="labelClasses">
-          {{label}}
+        <label
+          v-if="label"
+          :class="labelClasses"
+        >
+          {{ label }}
         </label>
       </slot>
-      <div :class="[
-       {'input-group': hasIcon},
-       {'focused': focused},
-       {'input-group-alternative': alternative},
-       {'has-label': label || $slots.label},
-       inputGroupClasses
-       ]">
-        <div v-if="prependIcon || $slots.prepend" class="input-group-prepend">
-        <span class="input-group-text">
-          <slot name="prepend">
-            <i :class="prependIcon"></i>
-          </slot>
-        </span>
+      <div
+        :class="[
+          {'input-group': hasIcon},
+          {'focused': focused},
+          {'input-group-alternative': alternative},
+          {'has-label': label || $slots.label},
+          inputGroupClasses
+        ]"
+      >
+        <div
+          v-if="prependIcon || $slots.prepend"
+          class="input-group-prepend"
+        >
+          <span class="input-group-text">
+            <slot name="prepend">
+              <i :class="prependIcon" />
+            </slot>
+          </span>
         </div>
         <slot v-bind="slotData">
           <input
             :value="value"
             :type="type"
-            v-on="listeners"
             v-bind="$attrs"
             :valid="valid"
             :required="required"
             class="form-control"
-            :class="[{'is-valid': valid && validated && successMessage}, {'is-invalid': invalid && validated}, inputClasses]">
+            :class="[{'is-valid': valid && validated && successMessage}, {'is-invalid': invalid && validated}, inputClasses]"
+            v-on="listeners"
+          >
         </slot>
-        <div v-if="appendIcon || $slots.append" class="input-group-append">
+        <div
+          v-if="appendIcon || $slots.append"
+          class="input-group-append"
+        >
           <span class="input-group-text">
-              <slot name="append">
-                  <i :class="appendIcon"></i>
-              </slot>
+            <slot name="append">
+              <i :class="appendIcon" />
+            </slot>
           </span>
         </div>
-        <slot name="infoBlock"></slot>
+        <slot name="infoBlock" />
       </div>
       <slot name="success">
-        <div class="valid-feedback" v-if="valid && validated && successMessage">
-          {{successMessage}}
+        <div
+          v-if="valid && validated && successMessage"
+          class="valid-feedback"
+        >
+          {{ successMessage }}
         </div>
       </slot>
       <slot name="error">
-        <div v-if="errors[0]" class="invalid-feedback" style="display: block;">
+        <div
+          v-if="errors[0]"
+          class="invalid-feedback"
+          style="display: block;"
+        >
           {{ errors[0] }}
         </div>
       </slot>
@@ -55,8 +79,8 @@
 </template>
 <script>
   export default {
+    name: "BaseInput",
     inheritAttrs: false,
-    name: "base-input",
     props: {
       required: {
         type: Boolean,

@@ -1,7 +1,7 @@
 const state = {
-  user: undefined,
-  lading: false,
-  error: undefined
+  user: null,
+  loading: false,
+  error: null
 }
 
 export default state

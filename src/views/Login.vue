@@ -4,7 +4,9 @@
       <div class="header-body text-center pt-5">
         <b-row class="justify-content-center">
           <b-col xl="5" lg="6" md="8" class="px-5">
-            <h1 class="text-white">Welcome!</h1>
+            <h1 class="text-white">
+              Welcome!
+            </h1>
           </b-col>
         </b-row>
       </div>
@@ -24,12 +26,14 @@
                       <span class="btn-inner--icon"
                         ><img src="img/icons/common/github.svg"
                       /></span>
+
                       <span class="btn-inner--text">Github</span>
                     </a>
                     <a href="#" class="btn btn-neutral btn-icon">
                       <span class="btn-inner--icon"
                         ><img src="img/icons/common/google.svg"
                       /></span>
+
                       <span class="btn-inner--text">Google</span>
                     </a>
                   </div>
@@ -42,22 +46,19 @@
                     v-slot="{ handleSubmit }"
                     ref="formValidator"
                   >
-                    <b-form
-                      role="form"
-                      @submit.prevent="handleSubmit(login)"
-                    >
+                    <b-form role="form" @submit.prevent="handleSubmit(login)">
                       <base-input
+                        v-model="form.email"
                         alternative
                         class="mb-3"
                         name="Email"
                         :rules="{ required: true, email: true }"
                         prepend-icon="ni ni-email-83"
                         placeholder="Email"
-                        v-model="form.email"
-                      >
-                      </base-input>
+                      />
 
                       <base-input
+                        v-model="form.password"
                         alternative
                         class="mb-3"
                         name="Password"
@@ -65,26 +66,35 @@
                         prepend-icon="ni ni-lock-circle-open"
                         type="password"
                         placeholder="Password"
-                        v-model="form.password"
-                      >
-                      </base-input>
+                      />
 
-                      <div class="text-center">
-                        <base-button
-                          type="primary"
-                          native-type="submit"
-                          class="my-4"
-                          >Sign in</base-button
-                        >
-                      </div>
+                      <b-overlay
+                        :show="busy"
+                        rounded
+                        opacity="0.6"
+                        spinner-small
+                        spinner-variant="primary"
+                        class="d-inline-block"
+                        @hidden="onHidden"
+                      >
+                        <div class="text-center">
+                          <base-button
+                            type="primary"
+                            native-type="submit"
+                            class="my-4"
+                          >
+                            Sign in
+                          </base-button>
+                        </div>
+                      </b-overlay>
                     </b-form>
                   </validation-observer>
                 </b-card-body>
               </b-card>
               <div class="text-right mb-5">
-                <router-link to="/signup" class="text-light"
-                  ><small>Create new account</small></router-link
-                >
+                <router-link to="/signup" class="text-light">
+                  <small>Create new account</small>
+                </router-link>
               </div>
             </b-col>
           </b-row>
@@ -106,12 +116,18 @@ export default {
         password: '',
       },
 
-      pageTransitionDuration: 200,
+      pageTransitionDuration: 1200,
     }
   },
   methods: {
     login() {
-      this.$store.dispatch('auth/login', this.form)
+      this.$store.dispatch('auth/login', this.form).then(() => {
+        this.$router.push('/')
+      })
+    },
+    onHidden() {
+      // Return focus to the button
+      this.$refs.button.focus()
     },
   },
 }
