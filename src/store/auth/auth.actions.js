@@ -20,11 +20,13 @@ const actions = {
       userDb.create(newUser, user.uid)
 
       localStorage.setItem('uid', user.uid)
-      
+
       commit('SET_LOADING', false)
+      return true
     } catch (err) {
       commit('SET_ERROR', err)
       commit('SET_LOADING', false)
+      return false
     }
   },
 
@@ -41,21 +43,13 @@ const actions = {
       localStorage.setItem('uid', user.uid)
 
       commit('SET_LOADING', false)
+      return true
     } catch (err) {
       commit('SET_ERROR', err)
       commit('SET_LOADING', false)
+      return false
     }
   },
-
-  /*fetchProfile: async ({ commit }, firebaseAuthUser) => {
-    commit('SET_LOADING', true)
-    const userFromFirebase = await new UsersDB().read(firebaseAuthUser.uid)
-
-    localStorage.setItem('uid', firebaseAuthUser.uid)
-
-    commit('SET_USER', userFromFirebase)
-    commit('SET_LOADING', false)
-  },*/
 
   logout: async ({ commit }) => {
     await firebase.auth().signOut()

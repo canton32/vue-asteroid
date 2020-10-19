@@ -19,11 +19,13 @@
 
 <script>
 export default {
-  name: "Home",
+  name: 'Home',
   methods: {
     logout() {
-      this.$store.dispatch("auth/logout");
+      this.$store.dispatch('auth/logout').then(() => {
+        this.$router.push('/login')
+      })
     },
-  }
-};
+  },
+}
 </script>
