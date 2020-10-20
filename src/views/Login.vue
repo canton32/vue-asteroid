@@ -101,7 +101,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Component } from 'vue-property-decorator'
 import { ZoomCenterTransition } from 'vue2-transitions'
 import { BaseInput, BaseButton } from '../components'
 import { State } from 'vuex-class'
@@ -110,7 +110,7 @@ import { State } from 'vuex-class'
   name: 'Login',
   components: { ZoomCenterTransition, BaseInput, BaseButton },
 })
-class Login extends Vue {
+export default class Login extends Vue {
   @State((state) => state.auth.loading) loading
   @State((state) => state.auth.error) error
 
@@ -134,8 +134,6 @@ class Login extends Vue {
     this.$refs.button.focus()
   }
 }
-
-export default Login
 </script>
 
 <style scoped>

@@ -109,7 +109,7 @@
 
 <script>
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Component } from 'vue-property-decorator'
 import { ZoomCenterTransition } from 'vue2-transitions'
 import { BaseInput } from '@/components'
 import { State } from 'vuex-class'
@@ -120,7 +120,7 @@ import { State } from 'vuex-class'
     BaseInput
   }
 })
-class Singup extends Vue {
+export default class Singup extends Vue {
   @State((state) => state.auth.loading) loading
   @State((state) => state.auth.error) error
 
@@ -140,7 +140,6 @@ class Singup extends Vue {
   }
 }
 
-export default Singup
 </script>
 
 <style scoped>
