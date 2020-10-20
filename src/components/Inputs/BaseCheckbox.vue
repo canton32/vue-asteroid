@@ -1,22 +1,15 @@
 <template>
-  <div
-    class="custom-control custom-checkbox"
-    :class="[
-      {disabled: disabled},
-      {[`custom-checkbox-${type}`]: type},inlineClass]"
-  >
-    <input
-      :id="cbId"
-      v-model="model"
-      class="custom-control-input"
-      :class="inputClasses"
-      type="checkbox"
-      :disabled="disabled"
-    >
-    <label
-      :for="cbId"
-      class="custom-control-label"
-    >
+  <div class="custom-control custom-checkbox"
+       :class="[
+       {disabled: disabled},
+       {[`custom-checkbox-${type}`]: type},inlineClass]">
+    <input :id="cbId"
+           class="custom-control-input"
+           :class="inputClasses"
+           type="checkbox"
+           :disabled="disabled"
+           v-model="model"/>
+    <label :for="cbId" class="custom-control-label">
       <slot>
         <span v-if="inline">&nbsp;</span>
       </slot>
@@ -25,7 +18,7 @@
 </template>
 <script>
   export default {
-    name: "BaseCheckbox",
+    name: "base-checkbox",
     model: {
       prop: "checked"
     },

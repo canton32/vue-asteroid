@@ -1,20 +1,16 @@
 <template>
   <div
     class="custom-control custom-radio"
-    :class="[inlineClass, { disabled: disabled }]"
-  >
+    :class="[inlineClass, { disabled: disabled }]">
     <input
       :id="cbId"
-      v-model="model"
       class="custom-control-input"
       type="radio"
       :disabled="disabled"
       :value="name"
-    >
-    <label
-      :for="cbId"
-      class="custom-control-label"
-    >
+      v-model="model"
+    />
+    <label :for="cbId" class="custom-control-label">
       <slot>
         <span v-if="inline">&nbsp;</span>
       </slot>
@@ -23,7 +19,7 @@
 </template>
 <script>
   export default {
-    name: 'BaseRadio',
+    name: 'base-radio',
     props: {
       name: {
         type: [String, Number],

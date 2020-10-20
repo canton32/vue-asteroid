@@ -1,8 +1,11 @@
-// A plugin file where you could register global directives
-import GlobalDirectives from './globalDirectives.js';
-
+// Validation plugin used to validate forms
+import { configure } from 'vee-validate';
 // A plugin file where you could register global components used across the app
 import GlobalComponents from './globalComponents';
+// A plugin file where you could register global directives
+import GlobalDirectives from './globalDirectives';
+// Sidebar on the right. Used as a local plugin in HomeLayout.vue
+import SideBar from '@/components/SidebarPlugin';
 
 // vue-bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -10,10 +13,6 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // asset imports
 import '@/assets/scss/argon.scss';
 import '@/assets/vendor/nucleo/css/nucleo.css';
-
-// Validation plugin used to validate forms
-import { configure } from 'vee-validate';
-
 import { extend } from 'vee-validate';
 import * as rules from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/en.json';
@@ -24,11 +23,11 @@ Object.keys(rules).forEach(rule => {
     message: messages[rule] // assign message
   });
 });
-
 export default {
   install(Vue) {
-    Vue.use(GlobalDirectives);
     Vue.use(GlobalComponents);
+    Vue.use(GlobalDirectives);
+    Vue.use(SideBar);
     Vue.use(BootstrapVue);
     Vue.use(IconsPlugin);
     configure({

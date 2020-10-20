@@ -2,6 +2,7 @@
   <b-button
     :type="nativeType"
     :disabled="disabled || loading"
+    @click="handleClick"
     class="base-button"
     :variant="!outline ? type : `outline-${type}`"
     :size="size"
@@ -13,20 +14,16 @@
       { 'btn-link': link },
       { disabled: disabled }
     ]"
-    @click="handleClick"
   >
     <slot name="loading">
-      <i
-        v-if="loading"
-        class="fas fa-spinner fa-spin"
-      />
+      <i v-if="loading" class="fas fa-spinner fa-spin"></i>
     </slot>
-    <slot />
+    <slot></slot>
   </b-button>
 </template>
 <script>
 export default {
-  name: 'BaseButton',
+  name: 'base-button',
   props: {
     round: Boolean,
     icon: Boolean,

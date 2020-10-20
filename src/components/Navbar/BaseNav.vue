@@ -1,51 +1,43 @@
 <template>
-  <b-navbar
-    toggleable
-    :class="classes"
-  >
+  <b-navbar toggleable :class="classes">
     <div :class="containerClasses">
-      <slot name="brand" />
+      <slot name="brand"></slot>
 
       <slot name="toggle-button">
         <button
-          v-if="hasMenu"
           class="navbar-toggler collapsed"
+          v-if="hasMenu"
           type="button"
+          @click="toggleMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          @click="toggleMenu"
         >
-          <span class="navbar-toggler-bar navbar-kebab" />
-          <span class="navbar-toggler-bar navbar-kebab" />
-          <span class="navbar-toggler-bar navbar-kebab" />
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+          <span class="navbar-toggler-bar navbar-kebab"></span>
+          <span class="navbar-toggler-bar navbar-kebab"></span>
         </button>
       </slot>
 
       <b-navbar-toggle
         target="nav-text-collapse"
-        @click.stop="toggleMenu"
-      />
+        @click.stop="toggleMenu">
+      </b-navbar-toggle>
 
       <b-collapse
-        id="nav-text-collapse"
-        v-click-outside="closeMenu"
         is-nav
+        id="nav-text-collapse"
         class="navbar-custom-collapse collapse"
         :class="menuClasses"
         :visible="show"
-      >
-        <slot :close-menu="closeMenu" />
+        v-click-outside="closeMenu">
+        <slot :close-menu="closeMenu"></slot>
       </b-collapse>
     </div>
   </b-navbar>
 </template>
 <script>
 export default {
-  name: 'BaseNav',
-  model: {
-    prop: 'show',
-    event: 'change'
-  },
+  name: 'base-nav',
   props: {
     show: {
       type: Boolean,
@@ -94,6 +86,10 @@ export default {
       },
       description: 'Navbar color type'
     }
+  },
+  model: {
+    prop: 'show',
+    event: 'change'
   },
   computed: {
     classes() {
