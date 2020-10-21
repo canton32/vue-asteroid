@@ -1,16 +1,39 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/Home.vue'
+import HomeLayout from '@/views/Layout/HomeLayout.vue'
+import NotFound from '@/views/NotFoundPage'
+
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    redirect: 'home',
     name: 'Home',
-    component: Home,
+    component: HomeLayout,
     meta: {
       requiresAuth: true,
     },
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        meta: {
+          requiresAuth: true,
+        },
+        component: () =>
+          import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+      },
+      {
+        path: '/favourite',
+        name: 'favourite',
+        meta: {
+          requiresAuth: true,
+        },
+        component: () =>
+          import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+      },
+    ],
   },
   {
     path: '/login',
@@ -24,10 +47,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "signup" */ '@/views/Signup.vue'),
   },
-  {
-    path: '*',
-    redirect: '/',
-  },
+  { path: '*', component: NotFound },
 ]
 
 const router = new VueRouter({
