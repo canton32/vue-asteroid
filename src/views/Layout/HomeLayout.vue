@@ -44,7 +44,7 @@
       <b-alert :show="error" variant="danger" dismissible>
         <h4 class="alert-heading">Ooops!</h4>
         <p>
-          Something's went wrong.
+          Something went wrong.
         </p>
         <hr />
         <p class="mb-0">

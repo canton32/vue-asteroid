@@ -1,11 +1,11 @@
 const state = {
   asteroids: [],
   page: {
-    number: 0
+    number: 0,
   },
   loading: false,
   error: null,
-  likes: []
+  likes: [],
 }
 
 export default state

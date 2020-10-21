@@ -11,7 +11,9 @@
       <template #input="picker" style="min-width: 150px">
         {{ picker.startDate | date }} - {{ picker.endDate | date }}
       </template>
-      <b-button ref="button" variant="primary" @click="handleClear">Clear </b-button>
+      <b-button ref="button" variant="primary" @click="handleClear"
+        >Clear
+      </b-button>
     </b-card-header>
     <el-table
       class="table-responsive table"
@@ -35,9 +37,11 @@
       <el-table-column label="PHA" min-width="100px" prop="pha">
         <template v-slot="{ row }">
           <i
-            :class="`text-${
-              row.is_potentially_hazardous_asteroid ? 'danger' : 'success'
-            } ni ni-planet`"
+            :class="
+              `text-${
+                row.is_potentially_hazardous_asteroid ? 'danger' : 'success'
+              } ni ni-planet`
+            "
           >
           </i>
         </template>
@@ -63,7 +67,13 @@
 
       <el-table-column label="" prop="action" min-width="240px">
         <template v-slot="{ row }">
-          {{ row.id }}
+          <base-button
+            class="btn-circle"
+            :type="isLiked(row.id) ? 'primary' : 'secondary'"
+            @click="handleLike(row.id)"
+          >
+            <i class="fa fa-heart"></i>
+          </base-button>
         </template>
       </el-table-column>
     </el-table>
@@ -80,15 +90,15 @@
   </b-card>
 </template>
 <script>
-import Vue from "vue";
-import { Table, TableColumn } from "element-ui";
-import { Component } from "vue-property-decorator";
-import { State } from "vuex-class";
-import DateRangePicker from "vue2-daterange-picker";
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
+import Vue from 'vue'
+import { Table, TableColumn } from 'element-ui'
+import { Component } from 'vue-property-decorator'
+import { State } from 'vuex-class'
+import DateRangePicker from 'vue2-daterange-picker'
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
 @Component({
-  name: "asteroid-table",
+  name: 'asteroid-table',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
@@ -96,44 +106,55 @@ import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
   },
   filters: {
     date(val) {
-      return val ? val.toLocaleDateString() : "";
+      return val ? val.toLocaleDateString() : ''
     },
   },
 })
 export default class AsteroidTable extends Vue {
-  @State((state) => state.data.asteroids) asteroids;
-  @State((state) => state.data.page.number) number;
-  @State((state) => state.data.page.total_pages) totalPages;
+  @State((state) => state.data.asteroids) asteroids
+  @State((state) => state.data.page.number) number
+  @State((state) => state.data.page.total_pages) totalPages
+  @State((state) => state.data.likes) likes
 
   rangeMode = false
 
-  currentPage = 1;
+  currentPage = 1
 
-  dateRange = { startDate: null, endDate: null };
+  dateRange = { startDate: null, endDate: null }
 
   mounted() {
-    this.currentPage = this.number + 1;
+    this.currentPage = this.number + 1
   }
 
   updateValues() {
     this.rangeMode = true
-    this.$store.dispatch("data/getFeed", this.dateRange);
+    this.$store.dispatch('data/getFeed', this.dateRange)
   }
 
   getPageSize() {
-    return process.env.NEOWS_PAGE_SIZE;
+    return process.env.NEOWS_PAGE_SIZE
   }
 
   handleChange(currentPage) {
-    this.currentPage = currentPage;
+    this.currentPage = currentPage
     if (!this.rangeMode) {
-      this.$store.dispatch("data/getAsteroids", this.currentPage - 1);
+      this.$store.dispatch('data/getAsteroids', this.currentPage - 1)
     }
+  }
+
+  isLiked(id) {
+    return this.likes.includes(id)
   }
 
   handleClear() {
     this.rangeMode = false
-    this.dateRange = { startDate: null, endDate: null };
+    this.dateRange = { startDate: null, endDate: null }
+  }
+
+  handleLike(id) {
+    const action = !this.isLiked(id) ? 'createUserLike' : 'deleteUserLike'
+
+    this.$store.dispatch(`data/${action}`, id)
   }
 }
 </script>
@@ -142,5 +163,15 @@ export default class AsteroidTable extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  padding: 6px 0px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
 }
 </style>
