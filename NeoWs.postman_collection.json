@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "0a9fa77a-1ab1-46d8-bbac-993952494fab",
+		"name": "NeoWs",
+		"description": "NeoWs (Near Earth Object Web Service) is a RESTful web service for near earth Asteroid information.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Browse",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Browse the overall Asteroid data-set GET https://api.nasa.gov/neo/rest/v1/neo/browse/\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Feed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Retrieve a list of Asteroids based on their closest approach date to Earth. GET https://api.nasa.gov/neo/rest/v1/feed?start_date=START_DATE&end_date=END_DATE&api_key=API_KEY"
+			},
+			"response": []
+		},
+		{
+			"name": "Lookup",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Lookup a specific Asteroid based on its NASA JPL small body (SPK-ID) ID GET https://api.nasa.gov/neo/rest/v1/neo/\n"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "b99a4d5e-3e37-4860-a56f-6c64b8dd41c7",
+			"key": "api_key",
+			"value": "s9ltMJSrDMqydmLJUU7ok9c4YuUF9fvaKzVg2JIH\n"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
