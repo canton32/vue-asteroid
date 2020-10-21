@@ -57,11 +57,11 @@
           <b-media no-body class="align-items-center">
             <span
               class="avatar avatar-sm rounded-circle bg-danger"
-              >{{ user.name.slice(0, 2).toUpperCase() }}
+              >{{ user && user.name.slice(0, 2).toUpperCase() }}
             </span>
             <b-media-body class="ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">{{
-                user.name
+                user && user.name
               }}</span>
             </b-media-body>
           </b-media>
@@ -131,7 +131,7 @@ export default class HomeNavBar extends Vue {
 
   logout() {
     this.$store.dispatch('auth/logout').then(() => {
-      this.$route.push('/login')
+      this.$router.push('/login')
     })
   }
 }
