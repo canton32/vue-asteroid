@@ -4,7 +4,6 @@ import UsersDB from '@/firebase/users-db'
 
 firebase.auth().onAuthStateChanged(async (firebaseUser) => {
   if (firebaseUser) {
-    console.log(firebaseUser)
     const userFromFirebase = await new UsersDB().read(firebaseUser.uid)
     store.commit('auth/SET_USER', userFromFirebase)
   }
