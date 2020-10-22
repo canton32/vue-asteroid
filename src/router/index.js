@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeLayout from '@/views/Layout/HomeLayout.vue'
-import NotFound from '@/views/NotFoundPage'
+import NotFound from '@/views/Pages/NotFoundPage'
 
 Vue.use(VueRouter)
 
@@ -22,7 +22,18 @@ const routes = [
           requiresAuth: true,
         },
         component: () =>
-          import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+          import(/* webpackChunkName: "home" */ '../views/Pages/Home.vue'),
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        meta: {
+          requiresAuth: true,
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: "home" */ '../views/Pages/UserProfile/UserProfile.vue'
+          ),
       },
     ],
   },
@@ -30,13 +41,13 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () =>
-      import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+      import(/* webpackChunkName: "login" */ '../views/Pages/Login.vue'),
   },
   {
     path: '/signup',
     name: 'Signup',
     component: () =>
-      import(/* webpackChunkName: "signup" */ '@/views/Signup.vue'),
+      import(/* webpackChunkName: "signup" */ '../views/Pages/Signup.vue'),
   },
   { path: '*', component: NotFound },
 ]
