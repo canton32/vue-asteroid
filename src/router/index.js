@@ -24,15 +24,6 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "home" */ '../views/Home.vue'),
       },
-      {
-        path: '/favourite',
-        name: 'favourite',
-        meta: {
-          requiresAuth: true,
-        },
-        component: () =>
-          import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-      },
     ],
   },
   {

@@ -19,6 +19,7 @@
       class="table-responsive table"
       header-row-class-name="thead-light"
       :data="getCurrentAsteroids()"
+      empty-text="No asteroid"
     >
       <el-table-column label="ID" min-width="100px" prop="id">
         <template v-slot="{ row }">

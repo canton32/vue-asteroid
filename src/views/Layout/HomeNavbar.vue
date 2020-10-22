@@ -33,10 +33,11 @@
           'navbar-search-light': type === 'light',
         }"
         id="navbar-search-main"
+        @submit.prevent="handleSubmit()"
       >
         <b-form-group class="mb-0">
           <b-input-group class="input-group-alternative input-group-merge">
-            <b-form-input placeholder="Search" type="text"> </b-form-input>
+            <b-form-input placeholder="Search" type="text" v-model="searchQuery" @> </b-form-input>
 
             <div class="input-group-append">
               <span class="input-group-text"
@@ -127,6 +128,10 @@ export default class HomeNavBar extends Vue {
 
   closeDropDown() {
     this.activeNotifications = false
+  }
+
+  handleSubmit() {
+    this.$store.dispatch('data/getLookup', this.searchQuery)
   }
 
   logout() {

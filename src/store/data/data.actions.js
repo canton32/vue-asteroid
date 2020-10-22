@@ -56,6 +56,40 @@ const actions = {
     }
   },
   /**
+   * Fetch asteroid with specified id
+   */
+  getLookup: async ({ commit }, id) => {
+    commit('SET_LOADING', true)
+    commit('SET_ERROR', null)
+    try {
+      const res = await axios.get(`/neo/${id}`)
+
+      commit('SET_PAGE', {
+        size: process.env.VUE_APP_NEOWS_PAGE_SIZE,
+        total_elements: 1,
+        total_pages: 1,
+        number: 0,
+      })
+
+      commit('SET_ASTEROIDS', [res.data])
+      commit('SET_LOADING', false)
+      commit('SET_ERROR', null)
+    } catch (err) {
+      commit('SET_LOADING', false)
+      if (err.response.status === 404) {
+        commit('SET_PAGE', {
+          size: process.env.VUE_APP_NEOWS_PAGE_SIZE,
+          total_elements: 0,
+          total_pages: 0,
+          number: 0,
+        })
+        commit('SET_ASTEROIDS', [])
+      } else {
+        commit('SET_ERROR', err)
+      }
+    }
+  },
+  /**
    * Create a like for current loggedin user
    */
   createUserLike: async ({ commit, state }, id) => {
@@ -107,7 +141,9 @@ const actions = {
           ...res.data.near_earth_objects[key]
             .sort(
               (a, b) =>
-                parseFloat(a.close_approach_data[0].miss_distance.astronomical) -
+                parseFloat(
+                  a.close_approach_data[0].miss_distance.astronomical
+                ) -
                 parseFloat(b.close_approach_data[0].miss_distance.astronomical)
             )
             .slice(0, 10),
