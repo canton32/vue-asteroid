@@ -43,7 +43,7 @@ import {
   Table,
   TableColumn,
 } from 'element-ui'
-import AsteroidTable from './Tables/AsteroidTable'
+import AsteroidTable from '@/views/Tables/AsteroidTable'
 import { Component } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 

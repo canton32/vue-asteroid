@@ -103,7 +103,7 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import { ZoomCenterTransition } from 'vue2-transitions'
-import { BaseInput, BaseButton } from '../components'
+import { BaseInput, BaseButton } from '@/components'
 import { State } from 'vuex-class'
 
 @Component({
