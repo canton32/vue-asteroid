@@ -1,5 +1,5 @@
 <template>
-  <div v:show="!loading">
+  <div>
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
       <!-- Card stats -->
       <b-row>
@@ -59,12 +59,6 @@ import { State } from 'vuex-class'
 })
 export default class Home extends Vue {
   @State((state) => state.data.page) page
-
-  async created() {
-    if (await this.$store.dispatch('data/getLikes')) {
-      await this.$store.dispatch('data/getAsteroids', 0)
-    }
-  }
 }
 </script>
 <style>

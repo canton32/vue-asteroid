@@ -82,8 +82,9 @@ import { FadeTransition } from 'vue2-transitions'
   },
 })
 export default class HomeLayout extends Vue {
-  @State((state) => state.data.loading) loading
   @State((state) => state.data.error) error
+
+  loading = false
 
   initScrollbar() {
     let isWindows = navigator.platform.startsWith('Win')
@@ -91,8 +92,16 @@ export default class HomeLayout extends Vue {
       initScrollbar('sidenav')
     }
   }
-  mounted() {
+  async mounted() {
     this.initScrollbar()
+
+    this.loading = true
+
+    if (await this.$store.dispatch('data/getLikes')) {
+      await this.$store.dispatch('data/getAsteroids', 0)
+    }
+
+    this.loading = false
   }
 }
 </script>
