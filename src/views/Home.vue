@@ -61,8 +61,9 @@ export default class Home extends Vue {
   @State((state) => state.data.page) page
 
   async created() {
-    await this.$store.dispatch('data/getLikes')
-    await this.$store.dispatch('data/getAsteroids', 0)
+    if (await this.$store.dispatch('data/getLikes')) {
+      await this.$store.dispatch('data/getAsteroids', 0)
+    }
   }
 }
 </script>

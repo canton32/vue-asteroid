@@ -18,7 +18,7 @@
     <el-table
       class="table-responsive table"
       header-row-class-name="thead-light"
-      :data="asteroids"
+      :data="getCurrentAsteroids()"
     >
       <el-table-column label="ID" min-width="100px" prop="id">
         <template v-slot="{ row }">
@@ -26,7 +26,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Name" min-width="150px" prop="name">
+      <el-table-column label="Name" min-width="120px" prop="name">
         <template v-slot="{ row }">
           <span class="font-weight-600 name mb-0 text-sm">
             {{ row.name }}
@@ -34,7 +34,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="PHA" min-width="100px" prop="pha">
+      <el-table-column label="PHA" min-width="50px" prop="pha">
         <template v-slot="{ row }">
           <i
             :class="
@@ -47,7 +47,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Magnitude" min-width="80px" prop="magnitude">
+      <el-table-column label="Magnitude" min-width="100px" prop="magnitude">
         <template v-slot="{ row }">
           <span>{{ row.absolute_magnitude_h }}</span>
         </template>
@@ -65,7 +65,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="" prop="action" min-width="240px">
+      <el-table-column
+        label="Miss Distance"
+        min-width="100px"
+        prop="miss_distance"
+      >
+        <template v-slot="{ row }">
+          <span v-if="row.close_approach_data[0]">{{
+            row.close_approach_data[0].miss_distance.astronomical
+          }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="" prop="action" min-width="100px">
         <template v-slot="{ row }">
           <base-button
             class="btn-circle"
@@ -82,15 +94,38 @@
       <base-pagination
         v-model="currentPage"
         :per-page="getPageSize()"
-        :total="totalPages"
+        :total="total"
         @change="handleChange"
         align="center"
       ></base-pagination>
     </b-card-footer>
+    <modal
+      :show.sync="modal"
+      gradient="danger"
+      modal-classes="modal-danger modal-dialog-centered"
+    >
+      <h6 slot="header" class="modal-title" id="modal-title-notification">
+        Feed Date Range
+      </h6>
+
+      <div class="py-3 text-center">
+        <i class="fa fa-alert fa-3x"></i>
+        <p>
+          The Feed date limit is only 7 Days
+        </p>
+      </div>
+
+      <template slot="footer">
+        <base-button type="white" @click="modal = false"
+          >Ok, Got it</base-button
+        >
+      </template>
+    </modal>
   </b-card>
 </template>
 <script>
 import Vue from 'vue'
+import dayjs from 'dayjs'
 import { Table, TableColumn } from 'element-ui'
 import { Component } from 'vue-property-decorator'
 import { State } from 'vuex-class'
@@ -113,7 +148,8 @@ import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 export default class AsteroidTable extends Vue {
   @State((state) => state.data.asteroids) asteroids
   @State((state) => state.data.page.number) number
-  @State((state) => state.data.page.total_pages) totalPages
+  @State((state) => state.data.page.total_elements) total
+  @State((state) => state.data.page.size) size
   @State((state) => state.data.likes) likes
 
   rangeMode = false
@@ -122,13 +158,39 @@ export default class AsteroidTable extends Vue {
 
   dateRange = { startDate: null, endDate: null }
 
+  modal = false
+
   mounted() {
     this.currentPage = this.number + 1
   }
 
+  getCurrentAsteroids() {
+    if (!this.rangeMode) {
+      return this.asteroids
+    }
+    return this.asteroids.slice(
+      (this.currentPage - 1) * this.size,
+      this.currentPage * this.size
+    )
+  }
+
   updateValues() {
+    if (
+      dayjs(this.dateRange.endDate).diff(
+        dayjs(this.dateRange.startDate),
+        'day'
+      ) > 7
+    ) {
+      this.modal = true
+      if (!(this.dateRange.startDate && this.dateRange.endDate)) {
+        this.dateRange = { startDate: null, endDate: null }
+      }
+      return
+    }
+
     this.rangeMode = true
     this.$store.dispatch('data/getFeed', this.dateRange)
+    this.currentPage = 1
   }
 
   getPageSize() {
@@ -149,6 +211,8 @@ export default class AsteroidTable extends Vue {
   handleClear() {
     this.rangeMode = false
     this.dateRange = { startDate: null, endDate: null }
+    this.currentPage = 1
+    this.$store.dispatch('data/getAsteroids', 0)
   }
 
   handleLike(id) {

@@ -41,7 +41,7 @@
         </div>
       </template>
 
-      <b-alert :show="error" variant="danger" dismissible>
+      <b-alert :show="error != null" variant="danger" dismissible>
         <h4 class="alert-heading">Ooops!</h4>
         <p>
           Something went wrong.
